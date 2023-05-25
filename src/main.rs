@@ -12,6 +12,12 @@ use shadow_tls::{
 
 use serde::Deserialize;
 
+#[cfg(all(feature = "jemalloc", not(target_env = "msvc")))]
+use jemallocator::Jemalloc;
+#[cfg(all(feature = "jemalloc", not(target_env = "msvc")))]
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
+
 #[derive(Parser, Debug, Deserialize)]
 #[clap(
     author,
